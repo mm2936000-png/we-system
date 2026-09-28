@@ -1,0 +1,438 @@
+# تم تجهيز الكود الكامل المدمج للبرنامج في ملف index.html جاهز للعرض والتشغيل
+html_code = """<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نظام كباين وسجل WE المتكامل</title>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            color: #333;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 25px rgba(88, 28, 135, 0.15);
+            width: 420px;
+            text-align: center;
+            border-top: 6px solid #581c87;
+        }
+        .we-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .we-logo-svg {
+            width: 110px;
+            height: auto;
+        }
+        h1 {
+            color: #581c87;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: #faf5ff;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid #e9d5ff;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            color: #581c87;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .tab-btn.active {
+            background-color: #581c87;
+            color: white;
+        }
+        .section-content {
+            display: none;
+            text-align: right;
+        }
+        .section-content.active {
+            display: block;
+        }
+        label {
+            display: block;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #4b5563;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #faf5ff;
+            color: #1f2937;
+            box-sizing: border-box;
+            text-align: center;
+            outline: none;
+        }
+        select:focus, input:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 5px rgba(124, 58, 237, 0.3);
+        }
+        button.action-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            background-color: #581c87;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        button.action-btn:hover {
+            background-color: #4c1d95;
+        }
+        .result-box {
+            margin-top: 15px;
+            background-color: #faf5ff;
+            padding: 12px;
+            border-radius: 8px;
+            border-right: 4px solid #7c3aed;
+            border: 1px solid #e9d5ff;
+            text-align: right;
+        }
+        .result-box p {
+            margin: 6px 0;
+            font-size: 14px;
+            color: #374151;
+        }
+        .result-box span {
+            color: #581c87;
+            font-weight: bold;
+        }
+        .record-item {
+            background: white;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            text-align: right;
+        }
+        .excel-btn {
+            background-color: #059669 !important;
+            margin-top: 10px;
+        }
+        .excel-btn:hover {
+            background-color: #047857 !important;
+        }
+        .import-btn {
+            background-color: #2563eb !important;
+            margin-top: 10px;
+        }
+        .import-btn:hover {
+            background-color: #1d4ed8 !important;
+        }
+        .search-box {
+            background-color: #f3e8ff;
+            border: 1px solid #d8b4fe;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="we-logo-container">
+            <svg class="we-logo-svg" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+                <text x="50%" y="75" font-size="75" font-weight="900" text-anchor="middle" fill="#581c87" font-family="Arial, sans-serif" letter-spacing="2">we</text>
+                <circle cx="212" cy="62" r="9" fill="#10b981"/>
+            </svg>
+        </div>
+        
+        <h1>نظام كباين وسجل العملاء المتكامل</h1>
+        
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('calcTab', this)">حاسبة البورتات</button>
+            <button class="tab-btn" onclick="switchTab('recordTab', this)">سجل العملاء</button>
+        </div>
+
+        <div id="calcTab" class="section-content active">
+            <label for="cabinetType">نوع الكبينة:</label>
+            <select id="cabinetType">
+                <option value="huawei">Huawei (هواوي)</option>
+                <option value="zte">ZTE (زد تي تي)</option>
+                <option value="nokia">Nokia (نوكيا)</option>
+            </select>
+
+            <label for="portNumber">رقم البورت الكلي:</label>
+            <input type="number" id="portNumber" placeholder="اكتب رقم البورت">
+
+            <button class="action-btn" onclick="calculateWE()">حساب البيانات</button>
+
+            <div class="result-box" id="resultBox" style="display:none;">
+                <p>الـ Shelf (الرف): <span id="resShelf">-</span></p>
+                <p>الـ Slot (المشط): <span id="resSlot">-</span></p>
+                <p>رقم البورت في المشط: <span id="resPort">-</span></p>
+            </div>
+        </div>
+
+        <div id="recordTab" class="section-content">
+            <label for="cabinetName">رقم/اسم الكابينة:</label>
+            <input type="text" id="cabinetName" placeholder="مثال: الكابينة الرئيسية 04">
+
+            <label for="clientName">اسم العميل:</label>
+            <input type="text" id="clientName" placeholder="اسم العميل الرباعي أو الثلاثي">
+
+            <label for="landlineNum">رقم الأرضي:</label>
+            <input type="text" id="landlineNum" placeholder="رقم التليفون الأرضي">
+
+            <label for="mobileNum">رقم الموبايل:</label>
+            <input type="text" id="mobileNum" placeholder="01xxxxxxxxx">
+
+            <label for="innerCable">الداخل (Inner):</label>
+            <input type="text" id="innerCable" placeholder="مثال: 1/25 أو 50/100">
+
+            <label for="outerCable">الخارج (Outer):</label>
+            <input type="text" id="outerCable" placeholder="مثال: 2/30 أو 80/100">
+
+            <label for="portDetail">البورت / الشلف / المشط:</label>
+            <input type="text" id="portDetail" placeholder="مثال: شلف 1 - مشط 12 - بورت 5">
+
+            <button class="action-btn" onclick="saveRecord()">حفظ في السجل</button>
+
+            <input type="file" id="excelFileinput" accept=".csv" style="display: none;" onchange="importFromExcel(event)">
+            <button class="action-btn import-btn" onclick="document.getElementById('excelFileinput').click()">📂 استيراد ملف إكسيل (CSV)</button>
+
+            <div class="saved-box" id="recordsList" style="margin-top: 15px; display:none;">
+                <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
+                
+                <label for="searchInput" style="color:#581c87;">🔍 بحث في السجل:</label>
+                <input type="text" id="searchInput" class="search-box" placeholder="ابحث بالاسم، الأرضي، أو الموبايل..." oninput="filterRecords()">
+
+                <p style="font-weight:bold; color:#581c87; border-bottom:1px solid #ddd; padding-bottom:4px; margin-top:10px;">البيانات المسجلة:</p>
+                <div id="recordsContainer" style="max-height: 160px; overflow-y: auto;"></div>
+                
+                <button class="action-btn excel-btn" onclick="exportToExcel()">📥 تصدير السجلات لملف Excel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allRecords = [];
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function calculateWE() {
+            let cabType = document.getElementById('cabinetType').value;
+            let portInput = parseInt(document.getElementById('portNumber').value);
+            let resBox = document.getElementById('resultBox');
+
+            if (isNaN(portInput) || portInput <= 0) {
+                alert("من فضلك أدخل رقم بورت صحيح!");
+                return;
+            }
+
+            let shelf = 0;
+            let portInsideShelf = 0;
+            let slot = 0;
+            let port = 0;
+            let maxPortsPerShelf = 64 * 16;
+
+            if (cabType === 'huawei') {
+                if (portInput <= maxPortsPerShelf) {
+                    shelf = 1;
+                    portInsideShelf = portInput - 1;
+                } else {
+                    shelf = 2;
+                    portInsideShelf = portInput - maxPortsPerShelf - 1;
+                }
+                slot = Math.floor(portInsideShelf / 16) + 1;
+                port = portInsideShelf % 16;
+            } 
+            else {
+                if (portInput <= maxPortsPerShelf) {
+                    shelf = 1;
+                    portInsideShelf = portInput - 1;
+                } else {
+                    shelf = 2;
+                    portInsideShelf = portInput - maxPortsPerShelf - 1;
+                }
+                slot = Math.floor(portInsideShelf / 16) + 1;
+                port = (portInsideShelf % 16) + 1;
+            }
+
+            if (slot > 64) {
+                slot = 64;
+            }
+
+            document.getElementById('resShelf').innerText = shelf;
+            document.getElementById('resSlot').innerText = slot;
+            document.getElementById('resPort').innerText = port;
+            resBox.style.display = 'block';
+
+            document.getElementById('portDetail').value = `شلف: ${shelf} - مشط: ${slot} - بورت: ${port}`;
+        }
+
+        function saveRecord() {
+            let cabName = document.getElementById('cabinetName').value.trim() || '-';
+            let client = document.getElementById('clientName').value.trim() || 'بدون اسم';
+            let landline = document.getElementById('landlineNum').value.trim() || '-';
+            let mobile = document.getElementById('mobileNum').value.trim() || '-';
+            let inner = document.getElementById('innerCable').value.trim() || '-';
+            let outer = document.getElementById('outerCable').value.trim() || '-';
+            let portDetail = document.getElementById('portDetail').value.trim() || '-';
+
+            let recordObj = {
+                cabinet: cabName,
+                client: client,
+                landline: landline,
+                mobile: mobile,
+                inner: inner,
+                outer: outer,
+                port: portDetail
+            };
+
+            allRecords.unshift(recordObj);
+
+            document.getElementById('recordsList').style.display = 'block';
+            renderRecords(allRecords);
+
+            document.getElementById('cabinetName').value = '';
+            document.getElementById('clientName').value = '';
+            document.getElementById('landlineNum').value = '';
+            document.getElementById('mobileNum').value = '';
+            document.getElementById('innerCable').value = '';
+            document.getElementById('outerCable').value = '';
+            document.getElementById('portDetail').value = '';
+        }
+
+        function renderRecords(recordsArray) {
+            let container = document.getElementById('recordsContainer');
+            container.innerHTML = '';
+
+            if (recordsArray.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888; font-size:12px; margin:10px 0;">لا توجد نتائج مطابقة</p>';
+                return;
+            }
+
+            recordsArray.forEach(item => {
+                let newItem = document.createElement('div');
+                newItem.className = 'record-item';
+                newItem.innerHTML = `
+                    🏢 <b>الكابينة:</b> ${item.cabinet} | 👤 <b>العميل:</b> ${item.client} <br>
+                    ☎️ <b>أرضي:</b> ${item.landline} | 📱 <b>موبايل:</b> ${item.mobile} <br>
+                    📥 <b>داخل:</b> <span style="color:#059669; font-weight:bold;">${item.inner}</span> | 
+                    📤 <b>خارج:</b> <span style="color:#2563eb; font-weight:bold;">${item.outer}</span> <br>
+                    📍 <b>تفاصيل البورت:</b> ${item.port}
+                `;
+                container.appendChild(newItem);
+            });
+        }
+
+        function filterRecords() {
+            let query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            let filtered = allRecords.filter(item => {
+                return item.client.toLowerCase().includes(query) ||
+                       item.landline.toLowerCase().includes(query) ||
+                       item.mobile.toLowerCase().includes(query) ||
+                       item.cabinet.toLowerCase().includes(query) ||
+                       item.inner.toLowerCase().includes(query) ||
+                       item.outer.toLowerCase().includes(query);
+            });
+
+            renderRecords(filtered);
+        }
+
+        function exportToExcel() {
+            if (allRecords.length === 0) {
+                alert("لا توجد سجلات لتصديرها!");
+                return;
+            }
+
+            let csvContent = "\uFEFFرقم الكابينة,اسم العميل,رقم الأرضي,رقم الموبايل,الداخل,الخارج,تفاصيل البورت\n";
+
+            allRecords.forEach(row => {
+                csvContent += `"${row.cabinet}","${row.client}","${row.landline}","${row.mobile}","${row.inner}","${row.outer}","${row.port}"\n`;
+            });
+
+    let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'WE_Cabinet_Clients_Records.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+        function importFromExcel(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let text = e.target.result;
+                let lines = text.split('\\n');
+
+                for (let i = 1; i < lines.length; i++) {
+                    let line = lines[i].trim();
+                    if (!line) continue;
+
+                    let cols = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(col => col.replace(/^"\vert{}"$/g, '').trim());
+                    
+                    if (cols.length >= 7) {
+                        allRecords.push({
+                            cabinet: cols[0] || '-',
+                            client: cols[1] || 'بدون اسم',
+                            landline: cols[2] || '-',
+                            mobile: cols[3] || '-',
+                            inner: cols[4] || '-',
+                            outer: cols[5] || '-',
+                            port: cols[6] || '-'
+                        });
+                    }
+                }
+
+                if (allRecords.length > 0) {
+                    document.getElementById('recordsList').style.display = 'block';
+                    renderRecords(allRecords);
+                }
+            };
+            reader.readAsText(file, 'utf-8');
+        }
+    </script>
+</body>
+</html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_code)
